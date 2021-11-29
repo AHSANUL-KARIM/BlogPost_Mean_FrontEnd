@@ -15,6 +15,7 @@ mongoose.connect("mongodb+srv://AHSANUL:password@cluster0.zy9iy.mongodb.net/mean
     console.log('Connection failed!');
   });
 
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/images", express.static(path.join("backend/images")));
