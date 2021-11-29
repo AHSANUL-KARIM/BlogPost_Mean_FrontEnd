@@ -1,9 +1,32 @@
-<mat-accordian>
-
-  <mat-expansion-panel>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-accordian multi="true" *ngIf="posts.length > 0 && !isLoading">
+  <mat-expansion-panel *ngFor="let post of posts">
     <mat-expansion-panel-header>
-      The expansion title!
+      {{ post.title }}
     </mat-expansion-panel-header>
-    <p>I'm in an expansion panel!</p>
+
+    <div class="post-image">
+      <img [src]="post.imagePath" [alt]="post.title" />
+    </div>
+    <p>{{ post.content }}</p>
+
+    <mat-action-row>
+      <a mat-button color="primary" [routerLink]="['/edit', post.id]">EDIT</a>
+      <button mat-button color="warn" (click)="onDelete(post.id)">
+        DELETE
+      </button>
+    </mat-action-row>
   </mat-expansion-panel>
 </mat-accordian>
+
+<mat-paginator
+  [length]="totalPosts"
+  [pageSize]="postsPerPage"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="onChangedPage($event)"
+  *ngIf="posts.length > 0"
+></mat-paginator>
+
+<p class="mat-body-1" *ngIf="posts.length <= 0 && !isLoadings">
+  No posts added yet!
+</p>
